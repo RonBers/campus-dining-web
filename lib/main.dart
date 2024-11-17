@@ -16,7 +16,7 @@ class MainApp extends StatelessWidget {
         initialRoute: '/login',
         routes: {
           '/login': (context) => const LoginScreen(),
-          '/dasboard': (context) => const DashboardScreen()
+          '/dashboard': (context) => const DashboardScreen()
         });
   }
 }
