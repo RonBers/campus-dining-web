@@ -57,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
       BuildContext context, String email, String password) async {
     try {
       final authService = AuthService();
-      authService.signUpWithEmail(email, password);
+      authService.loginOrSignUpWithEmail(email, password);
     } catch (e) {
       showErrorDialog(context, "Failed to sign in as guest.");
     }

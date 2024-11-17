@@ -32,21 +32,68 @@ class AuthService {
     }
   }
 
-  // Email and Password
-  Future<User?> signUpWithEmail(String email, String password) async {
+  Future<User?> loginOrSignUpWithEmail(String email, String password) async {
     try {
-      UserCredential userCredential =
-          await _auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
       print("User signed up: ${userCredential.user?.email}");
       return userCredential.user;
     } on FirebaseAuthException catch (e) {
-      print("Email Sign-Up Error: ${e.message}");
+      print("FirebaseAuthException: Code=${e.code}, Message=${e.message}");
+
+      if (e.code == 'email-already-in-use') {
+        try {
+          UserCredential userCredential = await FirebaseAuth.instance
+              .signInWithEmailAndPassword(email: email, password: password);
+          print("User logged in: ${userCredential.user?.email}");
+          return userCredential.user;
+        } on FirebaseAuthException catch (e) {
+          if (e.code == 'invalid-password') {
+            print('Wrong password provided for that user.');
+          } else {
+            print("Login Error: ${e.message}");
+          }
+          return null;
+        }
+      } else {
+        print("Sign-Up Error: ${e.message}");
+        return null;
+      }
+    } catch (e) {
+      print("Unexpected Error: $e");
       return null;
     }
   }
+
+// Register Email and Password
+//   Future<User?> signUpWithEmail(String email, String password) async {
+//     try {
+//       UserCredential userCredential =
+//           await _auth.createUserWithEmailAndPassword(
+//         email: email,
+//         password: password,
+//       );
+//       print("User signed up: ${userCredential.user?.email}");
+//       return userCredential.user;
+//     } on FirebaseAuthException catch (e) {
+//       print("Email Sign-Up Error: ${e.message}");
+//       return null;
+//     }
+//   }
+
+  //Login email password
+//   Future<User?> loginWithEmail(String email, String password) async {
+//     try {
+//       UserCredential userCredential = await FirebaseAuth.instance
+//           .signInWithEmailAndPassword(email: email, password: password);
+//     } on FirebaseAuthException catch (e) {
+//       if (e.code == 'user-not-found') {
+//         print('No user found for that email.');
+//       } else if (e.code == 'wrong-password') {
+//         print('Wrong password provided for that user.');
+//       }
+//     }
+//   }
 
   //Anonymous
   Future<User?> signInAnonymously() async {
