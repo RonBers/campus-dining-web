@@ -1,3 +1,5 @@
+import 'package:campus_dining_web/screens/dashboard_screen.dart';
+import 'package:campus_dining_web/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -9,12 +11,12 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
-    );
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        initialRoute: '/login',
+        routes: {
+          '/login': (context) => const LoginScreen(),
+          '/dasboard': (context) => const DashboardScreen()
+        });
   }
 }
