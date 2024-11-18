@@ -12,20 +12,42 @@ class DashboardScreen extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: Row(
+      backgroundColor: const Color(0xff2F348F),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('Hello'),
-            ElevatedButton(
-                onPressed: () {
-                  signOut(context);
-                },
-                child: const Text('Logout'))
+            const Text(
+              "Dashboard",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            SizedBox(
+              width: 300,
+              child: OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    padding: const EdgeInsets.fromLTRB(0, 22, 0, 22),
+                    backgroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      side: const BorderSide(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                  ),
+                  onPressed: () {
+                    signOut(context);
+                  },
+                  child: const Text(
+                    'Logout',
+                    style: TextStyle(color: Colors.black),
+                  )),
+            )
           ],
         ),
-      ),
-      body: const Center(
-        child: Text("Dashboard"),
       ),
     );
   }
