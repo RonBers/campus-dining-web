@@ -182,28 +182,28 @@ class _LoginScreenState extends State<LoginScreen> {
                             style: TextStyle(color: Colors.black),
                           )),
                     ),
-                    const Divider(
-                      color: Colors.grey,
-                      thickness: 1,
-                      height: 40,
-                    ),
-                    SizedBox(
-                      width: screenWidth,
-                      child: OutlinedButton(
-                          style: OutlinedButton.styleFrom(
-                            padding: const EdgeInsets.fromLTRB(0, 22, 0, 22),
-                            backgroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              side: const BorderSide(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                          ),
-                          onPressed: () => signInAnonymously(context),
-                          child: const Text(
-                            "Access as Guest",
-                            style: TextStyle(color: Colors.black),
-                          )),
-                    ),
+                    // const Divider(
+                    //   color: Colors.grey,
+                    //   thickness: 1,
+                    //   height: 40,
+                    // ),
+                    // SizedBox(
+                    //   width: screenWidth,
+                    //   child: OutlinedButton(
+                    //       style: OutlinedButton.styleFrom(
+                    //         padding: const EdgeInsets.fromLTRB(0, 22, 0, 22),
+                    //         backgroundColor: Colors.white,
+                    //         shape: RoundedRectangleBorder(
+                    //           side: const BorderSide(color: Colors.grey),
+                    //           borderRadius: BorderRadius.circular(5),
+                    //         ),
+                    //       ),
+                    //       onPressed: () => signInAnonymously(context),
+                    //       child: const Text(
+                    //         "Access as Guest",
+                    //         style: TextStyle(color: Colors.black),
+                    //       )),
+                    // ),
                   ],
                 ),
               ),
