@@ -14,56 +14,57 @@ class Dashboard extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.primaryColor,
-        title: const Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [Text('App')],
+        appBar: AppBar(
+          backgroundColor: AppColors.primaryColor,
+          title: const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [Text('App')],
+          ),
         ),
-      ),
-      backgroundColor: Colors.white12,
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            SizedBox(
-              height: 340,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 5,
-                itemBuilder: (context, index) {
-                  return const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5),
-                    child: MealCard(),
-                  );
-                },
-              ),
-            ),
-            const SizedBox(height: 20),
-            // Logout Button
-            SizedBox(
-              width: 300,
-              child: OutlinedButton(
-                style: OutlinedButton.styleFrom(
-                  padding: const EdgeInsets.fromLTRB(0, 22, 0, 22),
-                  backgroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    side: const BorderSide(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(5),
+        backgroundColor: Colors.white12,
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 340,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 5,
+                    itemBuilder: (context, index) {
+                      return const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 5),
+                        child: MealCard(),
+                      );
+                    },
                   ),
                 ),
-                onPressed: () {
-                  signOut(context);
-                },
-                child: const Text(
-                  'Logout',
-                  style: TextStyle(color: Colors.black),
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
+                const SizedBox(height: 20),
+                // Logout Button
+                SizedBox(
+                  width: 300,
+                  child: OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      padding: const EdgeInsets.fromLTRB(0, 22, 0, 22),
+                      backgroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        side: const BorderSide(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                    onPressed: () {
+                      signOut(context);
+                    },
+                    child: const Text(
+                      'Logout',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ));
   }
 }
