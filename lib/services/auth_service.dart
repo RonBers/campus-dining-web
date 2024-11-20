@@ -1,8 +1,18 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:toastification/toastification.dart';
 
 class AuthService {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth auth = FirebaseAuth.instance;
+
+  Stream<User?> get authStateChanges =>
+      FirebaseAuth.instance.authStateChanges();
+
+  bool isAuthenticated() {
+    return auth.currentUser != null;
+  }
 
   // Google
   Future<User?> signInWithGoogle() async {
@@ -23,44 +33,11 @@ class AuthService {
       );
 
       UserCredential userCredential =
-          await _auth.signInWithCredential(credential);
+          await auth.signInWithCredential(credential);
       print("User signed in: ${userCredential.user?.displayName}");
       return userCredential.user;
     } catch (e) {
       print("Google Sign-In Error: $e");
-      return null;
-    }
-  }
-
-  Future<User?> loginOrSignUpWithEmail(String email, String password) async {
-    try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
-      print("User signed up: ${userCredential.user?.email}");
-      return userCredential.user;
-    } on FirebaseAuthException catch (e) {
-      print("FirebaseAuthException: Code=${e.code}, Message=${e.message}");
-
-      if (e.code == 'email-already-in-use') {
-        try {
-          UserCredential userCredential = await FirebaseAuth.instance
-              .signInWithEmailAndPassword(email: email, password: password);
-          print("User logged in: ${userCredential.user?.email}");
-          return userCredential.user;
-        } on FirebaseAuthException catch (e) {
-          if (e.code == 'invalid-password') {
-            print('Wrong password provided for that user.');
-          } else {
-            print("Login Error: ${e.message}");
-          }
-          return null;
-        }
-      } else {
-        print("Sign-Up Error: ${e.message}");
-        return null;
-      }
-    } catch (e) {
-      print("Unexpected Error: $e");
       return null;
     }
   }
@@ -81,19 +58,39 @@ class AuthService {
 //     }
 //   }
 
-  //Login email password
-//   Future<User?> loginWithEmail(String email, String password) async {
-//     try {
-//       UserCredential userCredential = await FirebaseAuth.instance
-//           .signInWithEmailAndPassword(email: email, password: password);
-//     } on FirebaseAuthException catch (e) {
-//       if (e.code == 'user-not-found') {
-//         print('No user found for that email.');
-//       } else if (e.code == 'wrong-password') {
-//         print('Wrong password provided for that user.');
-//       }
-//     }
-//   }
+  // Login email password
+  Future<User?> loginWithEmail(
+      String email, String password, BuildContext context) async {
+    try {
+      UserCredential userCredential = await auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      if (context.mounted) {
+        toastification.show(
+          type: ToastificationType.success,
+          title: const Text("Welcome back"),
+          description: Text(email),
+          style: ToastificationStyle.flatColored,
+          autoCloseDuration: const Duration(seconds: 5),
+        );
+
+        context.go('/dashboard');
+      }
+      return userCredential.user;
+    } on FirebaseAuthException catch (e) {
+      String message = '';
+      if (e.code == 'invalid-credential') {
+        message = "Invalid email or password. Please try again.";
+      } else {
+        message = "Something went wrong. Please try again.";
+      }
+      toastification.show(
+          type: ToastificationType.error,
+          title: const Text("Oops"),
+          description: Text(message),
+          style: ToastificationStyle.flatColored,
+          autoCloseDuration: const Duration(seconds: 5));
+    }
+  }
 
   //Anonymous
   Future<User?> signInAnonymously() async {
@@ -113,7 +110,10 @@ class AuthService {
     }
   }
 
-  Future<void> signOut() async {
-    await FirebaseAuth.instance.signOut();
+  Future<void> signOut(BuildContext context) async {
+    await auth.signOut();
+    if (context.mounted) {
+      context.go('/login');
+    }
   }
 }
