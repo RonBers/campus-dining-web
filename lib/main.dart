@@ -4,6 +4,7 @@ import 'package:campus_dining_web/screens/login_screen.dart';
 import 'package:campus_dining_web/screens/settings_screen.dart';
 import 'package:campus_dining_web/services/auth_service.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
