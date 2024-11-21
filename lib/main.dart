@@ -1,5 +1,6 @@
 import 'package:campus_dining_web/firebase_options.dart';
 import 'package:campus_dining_web/screens/dashboard_screen.dart';
+import 'package:campus_dining_web/screens/item_details_screen.dart';
 import 'package:campus_dining_web/screens/login_screen.dart';
 import 'package:campus_dining_web/screens/settings_screen.dart';
 import 'package:campus_dining_web/services/auth_service.dart';
@@ -37,6 +38,9 @@ final GoRouter router = GoRouter(
   routes: [
     GoRoute(path: '/login', builder: (context, state) => const LoginScreen()),
     GoRoute(path: '/dashboard', builder: (context, state) => const Dashboard()),
+    GoRoute(
+        path: '/item_details',
+        builder: (context, state) => const ItemDetailsScreen())
   ],
   redirect: (BuildContext context, GoRouterState state) {
     final isAuthenticated = AuthService().isAuthenticated();

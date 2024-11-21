@@ -1,5 +1,6 @@
 import 'package:campus_dining_web/utils/constants/AppStyles.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class MealCard extends StatelessWidget {
   const MealCard({Key? key, String? title, String? imageUrl}) : super(key: key);
@@ -54,9 +55,7 @@ class MealCard extends StatelessWidget {
                   ],
                 ),
                 IconButton(
-                  onPressed: () {
-                    print("hello");
-                  },
+                  onPressed: () => context.go('/item_details'),
                   tooltip: "See details",
                   icon: const Icon(
                     Icons.chevron_right,
