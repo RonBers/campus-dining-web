@@ -16,9 +16,19 @@ class Dashboard extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: AppColors.primaryColor,
-          title: const Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [Text('App')],
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text('Dashboard', style: TextStyle(color: Colors.white)),
+              IconButton(
+                  onPressed: () {
+                    signOut(context);
+                  },
+                  icon: const Icon(
+                    Icons.logout,
+                    color: Colors.white,
+                  ))
+            ],
           ),
         ),
         backgroundColor: Colors.white12,
@@ -41,27 +51,6 @@ class Dashboard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
-                // Logout Button
-                SizedBox(
-                  width: 300,
-                  child: OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                      padding: const EdgeInsets.fromLTRB(0, 22, 0, 22),
-                      backgroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        side: const BorderSide(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                    ),
-                    onPressed: () {
-                      signOut(context);
-                    },
-                    child: const Text(
-                      'Logout',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  ),
-                )
               ],
             ),
           ),
