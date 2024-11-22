@@ -1,4 +1,4 @@
-import 'package:campus_dining_web/reporitories/meal_repository.dart';
+import 'package:campus_dining_web/repositories/meal_repository.dart';
 import 'package:campus_dining_web/utils/constants/AppStyles.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';

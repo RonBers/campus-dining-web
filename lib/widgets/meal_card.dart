@@ -20,111 +20,111 @@ class MealCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 350,
-      height: 340,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            blurRadius: 8,
-            spreadRadius: 2,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          // Top Section
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            margin: const EdgeInsets.only(bottom: 10),
-            decoration: const BoxDecoration(
-              color: AppColors.primaryColor,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10),
-                topRight: Radius.circular(10),
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        double cardWidth = constraints.maxWidth * 0.45;
+        double cardHeight = cardWidth * 1.2;
+        double imageHeight = cardHeight * 0.65;
+        double fontSize = cardWidth > 250 ? 18 : 16;
+        double iconSize = cardWidth > 250 ? 22 : 18;
+
+        return Container(
+          width: cardWidth,
+          height: cardHeight,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(8),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.3),
+                blurRadius: 6,
+                spreadRadius: 1,
+                offset: const Offset(0, 4),
               ),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
+            ],
+          ),
+          child: Column(
+            children: [
+              // Top Section
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                margin: const EdgeInsets.only(bottom: 8),
+                decoration: const BoxDecoration(
+                  color: AppColors.primaryColor,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(8),
+                    topRight: Radius.circular(8),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    const Text(
-                      '4.5',
-                      style: TextStyle(
+                    IconButton(
+                      onPressed: () => context.go('/item_details/$mealId'),
+                      tooltip: "See details",
+                      icon: Icon(
+                        Icons.chevron_right,
                         color: Colors.white,
-                        fontWeight: FontWeight.bold,
+                        size: iconSize,
                       ),
-                    ),
-                    const SizedBox(width: 5),
-                    Icon(
-                      Icons.star_rounded,
-                      color: Colors.amber[300],
                     ),
                   ],
                 ),
-                IconButton(
-                  onPressed: () => context.go('/item_details/$mealId'),
-                  tooltip: "See details",
-                  icon: const Icon(
-                    Icons.chevron_right,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          // Middle Section
-          Image.network(
-            photoUrl,
-            height: 200,
-            fit: BoxFit.contain,
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          // Bottom Section
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                // Food Name
-                Expanded(
-                  child: Text(
-                    name,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
+              ),
+              // Middle Section
+              Image.network(
+                photoUrl,
+                height: imageHeight,
+                fit: screenWidth > 600 ? BoxFit.contain : BoxFit.cover,
+              ),
+              const SizedBox(height: 10),
+              // Bottom Section
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                child: Row(
+                  children: [
+                    // Food Name
+                    Expanded(
+                      child: Text(
+                        name,
+                        style: TextStyle(
+                          fontSize: fontSize,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                    // Action Buttons
+                    IconButton(
+                      onPressed: () {
+                        // print('edit food');
+                      },
+                      icon: Icon(
+                        Icons.edit,
+                        size: iconSize,
+                      ),
+                      tooltip: 'Edit',
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        // print('delete food');
+                      },
+                      icon: Icon(
+                        Icons.delete,
+                        size: iconSize,
+                      ),
+                      tooltip: 'Delete',
+                    ),
+                  ],
                 ),
-                // Action Buttons
-                IconButton(
-                  onPressed: () {
-                    // print('edit food');
-                  },
-                  icon: const Icon(Icons.edit),
-                  tooltip: 'Edit',
-                ),
-                IconButton(
-                  onPressed: () {
-                    // print('delete food');
-                  },
-                  icon: const Icon(Icons.delete),
-                  tooltip: 'Delete',
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
