@@ -45,3 +45,5 @@ app.*.map.json
 
 *.env
 lib/firebase_options.dart
+
+*cors.json

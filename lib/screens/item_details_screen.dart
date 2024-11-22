@@ -1,8 +1,17 @@
+import 'package:campus_dining_web/reporitories/meal_repository.dart';
 import 'package:campus_dining_web/utils/constants/AppStyles.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class ItemDetailsScreen extends StatelessWidget {
-  const ItemDetailsScreen({super.key});
+  final String mealId;
+
+  const ItemDetailsScreen({super.key, required this.mealId});
+
+  Future<Map<String, dynamic>> fetchMealById(String mealId) async {
+    final mealRepository = MealRepository();
+    return await mealRepository.fetchMealByIdAsJson(mealId);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -10,60 +19,80 @@ class ItemDetailsScreen extends StatelessWidget {
       backgroundColor: Colors.white12,
       appBar: AppBar(
         backgroundColor: AppColors.primaryColor,
-        title: const Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text('Dashboard', style: TextStyle(color: Colors.white)),
-          ],
+        title:
+            const Text('Meal Details', style: TextStyle(color: Colors.white)),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            if (Navigator.canPop(context)) {
+              context.pop();
+            } else {
+              context.go('/dashboard');
+            }
+          },
         ),
       ),
-      body: Center(
-        child: Container(
-          height: 700,
-          width: 1200,
-          // decoration: BoxDecoration(
-          //     border: Border.all(color: Colors.black, width: 2.0)),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Image.asset(
-                'assets/img/beefOntamaBukakeUdon.png',
-                height: 350,
-                fit: BoxFit.contain,
-              ),
-              const SizedBox(
-                width: 500,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+      body: FutureBuilder<Map<String, dynamic>>(
+        future: fetchMealById(mealId),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(
+              child: Text('Error: ${snapshot.error}'),
+            );
+          } else if (!snapshot.hasData) {
+            return const Center(child: Text('Meal not found.'));
+          } else {
+            final meal = snapshot.data!;
+            return Center(
+              child: Container(
+                height: 700,
+                width: 1200,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Text(
-                      "Beef Ontama Bukake Udon",
-                      style:
-                          TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
-                      softWrap: true,
+                    Image.network(
+                      meal['photoUrl'] ?? '',
+                      height: 350,
+                      fit: BoxFit.contain,
                     ),
+                    const SizedBox(width: 50),
                     SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      "Flavorful Bukkake sauce, topped with thinly-sliced sauteed beef and half-boiled egg.",
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      "Php 210.00",
-                      style:
-                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                      width: 500,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            meal['name'] ?? 'No Name',
+                            style: const TextStyle(
+                              fontSize: 40,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                          Text(
+                            meal['description'] ?? 'No Description',
+                            style: const TextStyle(fontSize: 20),
+                          ),
+                          const SizedBox(height: 20),
+                          Text(
+                            'Php ${(meal['price'] ?? 0).toString()}',
+                            style: const TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
                     )
                   ],
                 ),
-              )
-            ],
-          ),
-        ),
+              ),
+            );
+          }
+        },
       ),
     );
   }

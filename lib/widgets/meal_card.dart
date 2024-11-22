@@ -3,7 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class MealCard extends StatelessWidget {
-  const MealCard({Key? key, String? title, String? imageUrl}) : super(key: key);
+  final String mealId;
+  final String name;
+  final String description;
+  final String photoUrl;
+  final String price;
+
+  const MealCard({
+    super.key,
+    required this.mealId,
+    required this.name,
+    required this.description,
+    required this.photoUrl,
+    required this.price,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +40,7 @@ class MealCard extends StatelessWidget {
           // Top Section
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10),
-            margin: EdgeInsets.only(bottom: 10),
+            margin: const EdgeInsets.only(bottom: 10),
             decoration: const BoxDecoration(
               color: AppColors.primaryColor,
               borderRadius: BorderRadius.only(
@@ -55,7 +68,7 @@ class MealCard extends StatelessWidget {
                   ],
                 ),
                 IconButton(
-                  onPressed: () => context.go('/item_details'),
+                  onPressed: () => context.go('/item_details/$mealId'),
                   tooltip: "See details",
                   icon: const Icon(
                     Icons.chevron_right,
@@ -66,8 +79,8 @@ class MealCard extends StatelessWidget {
             ),
           ),
           // Middle Section
-          Image.asset(
-            'assets/img/beefOntamaBukakeUdon.png',
+          Image.network(
+            photoUrl,
             height: 200,
             fit: BoxFit.contain,
           ),
@@ -81,10 +94,10 @@ class MealCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 // Food Name
-                const Expanded(
+                Expanded(
                   child: Text(
-                    'Beef Ontama Bukake Udon',
-                    style: TextStyle(
+                    name,
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w500,
                     ),
@@ -95,14 +108,14 @@ class MealCard extends StatelessWidget {
                 // Action Buttons
                 IconButton(
                   onPressed: () {
-                    print('edit food');
+                    // print('edit food');
                   },
                   icon: const Icon(Icons.edit),
                   tooltip: 'Edit',
                 ),
                 IconButton(
                   onPressed: () {
-                    print('delete food');
+                    // print('delete food');
                   },
                   icon: const Icon(Icons.delete),
                   tooltip: 'Delete',

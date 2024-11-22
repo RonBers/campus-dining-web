@@ -39,8 +39,11 @@ final GoRouter router = GoRouter(
     GoRoute(path: '/login', builder: (context, state) => const LoginScreen()),
     GoRoute(path: '/dashboard', builder: (context, state) => const Dashboard()),
     GoRoute(
-        path: '/item_details',
-        builder: (context, state) => const ItemDetailsScreen())
+        path: '/item_details/:mealId',
+        builder: (context, state) {
+          final mealId = state.pathParameters['mealId']!;
+          return ItemDetailsScreen(mealId: mealId);
+        })
   ],
   redirect: (BuildContext context, GoRouterState state) {
     final isAuthenticated = AuthService().isAuthenticated();
