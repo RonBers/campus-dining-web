@@ -42,16 +42,16 @@ class MealRepository {
     }
   }
 
-//Other Func for future use
-  // Future<void> updateMeal(
-  //     String id, Map<String, dynamic> updatedMealJson) async {
-  //   try {
-  //     await mealsCollection.doc(id).update(updatedMealJson);
-  //   } catch (e) {
-  //     throw Exception('Failed to update meal: $e');
-  //   }
-  // }
+  Future<void> updateMeal(
+      String id, Map<String, dynamic> updatedMealJson) async {
+    try {
+      await mealsCollection.doc(id).update(updatedMealJson);
+    } catch (e) {
+      throw Exception('Failed to update meal: $e');
+    }
+  }
 
+//Other Func for future use
   // Future<void> deleteMeal(String id) async {
   //   try {
   //     await mealsCollection.doc(id).delete();

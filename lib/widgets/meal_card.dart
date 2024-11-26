@@ -1,4 +1,5 @@
 import 'package:campus_dining_web/utils/constants/AppStyles.dart';
+import 'package:campus_dining_web/widgets/add_meal._dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -100,7 +101,18 @@ class MealCard extends StatelessWidget {
                     // Action Buttons
                     IconButton(
                       onPressed: () {
-                        // print('edit food');
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AddMealDialog(
+                              mealId: mealId,
+                              name: name,
+                              description: description,
+                              price: price,
+                              photoUrl: photoUrl,
+                            );
+                          },
+                        );
                       },
                       icon: Icon(
                         Icons.edit,

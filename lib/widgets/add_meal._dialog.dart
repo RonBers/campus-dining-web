@@ -6,7 +6,20 @@ import 'package:flutter/material.dart';
 import 'package:campus_dining_web/repositories/meal_repository.dart';
 
 class AddMealDialog extends StatefulWidget {
-  const AddMealDialog({super.key});
+  final String? mealId; // Optional, only used for editing
+  final String? name;
+  final String? description;
+  final String? price;
+  final String? photoUrl;
+
+  const AddMealDialog({
+    super.key,
+    this.mealId, // Optional for editing
+    this.name,
+    this.description,
+    this.price,
+    this.photoUrl,
+  });
 
   @override
   State<AddMealDialog> createState() => _AddMealDialogState();
@@ -16,8 +29,23 @@ class _AddMealDialogState extends State<AddMealDialog> {
   final nameController = TextEditingController();
   final descriptionController = TextEditingController();
   final priceController = TextEditingController();
-
   Uint8List? _imageBytes;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // If editing, populate the form with existing data
+    if (widget.name != null) {
+      nameController.text = widget.name!;
+    }
+    if (widget.description != null) {
+      descriptionController.text = widget.description!;
+    }
+    if (widget.price != null) {
+      priceController.text = widget.price!;
+    }
+  }
 
   Future<void> _uploadImage() async {
     final Uint8List? pickedImage = await pickImageAsBytes();
@@ -32,18 +60,25 @@ class _AddMealDialogState extends State<AddMealDialog> {
   }
 
   Future<void> _saveMeal() async {
-    if (_imageBytes != null) {
+    if (_imageBytes != null || widget.photoUrl != null) {
       try {
-        final storageRef = FirebaseStorage.instance
-            .ref()
-            .child('uploads/${DateTime.now().millisecondsSinceEpoch}.jpg');
-        final uploadTask = storageRef.putData(
-          _imageBytes!,
-          SettableMetadata(contentType: 'image/jpeg'),
-        );
+        String? downloadUrl;
 
-        final snapshot = await uploadTask;
-        final downloadUrl = await snapshot.ref.getDownloadURL();
+        if (_imageBytes != null) {
+          final storageRef = FirebaseStorage.instance
+              .ref()
+              .child('uploads/${DateTime.now().millisecondsSinceEpoch}.jpg');
+          final uploadTask = storageRef.putData(
+            _imageBytes!,
+            SettableMetadata(contentType: 'image/jpeg'),
+          );
+
+          final snapshot = await uploadTask;
+          downloadUrl = await snapshot.ref.getDownloadURL();
+        } else {
+          downloadUrl = widget
+              .photoUrl; // Keep the existing image if not uploading a new one
+        }
 
         final timestamp = FieldValue.serverTimestamp();
 
@@ -55,10 +90,17 @@ class _AddMealDialogState extends State<AddMealDialog> {
           'dateCreated': timestamp,
         };
 
-        print(mealJson);
-
         MealRepository mealRepository = MealRepository();
-        await mealRepository.addMeal(mealJson);
+
+        if (widget.mealId != null) {
+          // Editing: Update the existing meal
+          await mealRepository.updateMeal(widget.mealId!, mealJson);
+        } else {
+          // Adding new meal
+          await mealRepository.addMeal(mealJson);
+        }
+
+        Navigator.of(context).pop(); // Close the dialog
       } catch (e) {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text('Error: $e')));
@@ -72,7 +114,7 @@ class _AddMealDialogState extends State<AddMealDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text("Add Meal"),
+      title: Text(widget.mealId == null ? "Add Meal" : "Edit Meal"),
       content: SingleChildScrollView(
         child: ListBody(
           children: <Widget>[
@@ -127,10 +169,8 @@ class _AddMealDialogState extends State<AddMealDialog> {
       ),
       actions: [
         TextButton(
-          onPressed: () {
-            _saveMeal();
-          },
-          child: const Text("Add"),
+          onPressed: _saveMeal,
+          child: const Text("Save"),
         ),
         TextButton(
           onPressed: () {
