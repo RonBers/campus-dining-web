@@ -6,7 +6,6 @@ Future<Uint8List?> pickImageAsBytes() async {
     Uint8List? imageFile = await ImagePickerWeb.getImageAsBytes();
 
     if (imageFile != null) {
-      print(imageFile);
       return imageFile;
     } else {
       return null;
