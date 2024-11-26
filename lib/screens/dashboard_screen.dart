@@ -1,7 +1,7 @@
 import 'package:campus_dining_web/repositories/meal_repository.dart';
 import 'package:campus_dining_web/utils/constants/AppStyles.dart';
 import 'package:campus_dining_web/services/auth_service.dart';
-import 'package:campus_dining_web/widgets/add_meal._dialog.dart';
+import 'package:campus_dining_web/widgets/add_meal_dialog.dart';
 import 'package:campus_dining_web/widgets/meal_card.dart';
 import 'package:flutter/material.dart';
 
@@ -36,13 +36,14 @@ class Dashboard extends StatelessWidget {
               Row(
                 children: [
                   SizedBox(
-                    width: 100,
+                    width: 110,
                     child: OutlinedButton(
                       style: OutlinedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 22),
-                        backgroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 18),
+                        backgroundColor: AppColors.primaryColor,
+                        side: const BorderSide(color: Colors.white, width: 2),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
+                          borderRadius: BorderRadius.circular(100),
                         ),
                       ),
                       onPressed: () {
@@ -54,7 +55,7 @@ class Dashboard extends StatelessWidget {
                       },
                       child: const Text(
                         "Add Meal",
-                        style: TextStyle(color: Colors.black),
+                        style: TextStyle(color: Colors.white),
                       ),
                     ),
                   ),
