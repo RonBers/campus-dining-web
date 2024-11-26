@@ -11,14 +11,16 @@ class AddMealDialog extends StatefulWidget {
   final String? description;
   final String? price;
   final String? photoUrl;
+  final bool? isHidden;
 
   const AddMealDialog({
     super.key,
-    this.mealId, // Optional for editing
+    this.mealId,
     this.name,
     this.description,
     this.price,
     this.photoUrl,
+    this.isHidden,
   });
 
   @override
@@ -29,13 +31,14 @@ class _AddMealDialogState extends State<AddMealDialog> {
   final nameController = TextEditingController();
   final descriptionController = TextEditingController();
   final priceController = TextEditingController();
+  bool isHidden = false; // Initialize default value for the toggle
   Uint8List? _imageBytes;
 
   @override
   void initState() {
     super.initState();
 
-    // If editing, populate the form with existing data
+    // Pre-fill the fields if editing
     if (widget.name != null) {
       nameController.text = widget.name!;
     }
@@ -45,6 +48,10 @@ class _AddMealDialogState extends State<AddMealDialog> {
     if (widget.price != null) {
       priceController.text = widget.price!;
     }
+
+    // Set the initial state of the toggle based on the passed value
+    print(widget.isHidden);
+    isHidden = widget.isHidden ?? false;
   }
 
   Future<void> _uploadImage() async {
@@ -88,6 +95,7 @@ class _AddMealDialogState extends State<AddMealDialog> {
           'price': double.tryParse(priceController.text) ?? 0.0,
           'photoUrl': downloadUrl,
           'dateCreated': timestamp,
+          'isHidden': isHidden, // Include isHidden value
         };
 
         MealRepository mealRepository = MealRepository();
@@ -163,6 +171,20 @@ class _AddMealDialogState extends State<AddMealDialog> {
                 _uploadImage();
               },
               child: const Text("Upload Image"),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text("Hide Meal"),
+                Switch(
+                  value: isHidden,
+                  onChanged: (value) {
+                    setState(() {
+                      isHidden = value;
+                    });
+                  },
+                ),
+              ],
             ),
           ],
         ),

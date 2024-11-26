@@ -121,6 +121,7 @@ class Dashboard extends StatelessWidget {
                                   description: meal['description'] as String,
                                   photoUrl: meal['photoUrl'] as String,
                                   price: meal['price'].toString(),
+                                  isHidden: meal['isHidden'],
                                 ),
                               );
                             },
