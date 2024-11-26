@@ -1,4 +1,5 @@
 import 'package:campus_dining_web/utils/constants/AppStyles.dart';
+import 'package:campus_dining_web/widgets/add_meal._dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -8,6 +9,7 @@ class MealCard extends StatelessWidget {
   final String description;
   final String photoUrl;
   final String price;
+  final bool isHidden;
 
   const MealCard({
     super.key,
@@ -16,6 +18,7 @@ class MealCard extends StatelessWidget {
     required this.description,
     required this.photoUrl,
     required this.price,
+    required this.isHidden,
   });
 
   @override
@@ -100,7 +103,19 @@ class MealCard extends StatelessWidget {
                     // Action Buttons
                     IconButton(
                       onPressed: () {
-                        // print('edit food');
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AddMealDialog(
+                              mealId: mealId,
+                              name: name,
+                              description: description,
+                              price: price,
+                              photoUrl: photoUrl,
+                              isHidden: isHidden,
+                            );
+                          },
+                        );
                       },
                       icon: Icon(
                         Icons.edit,

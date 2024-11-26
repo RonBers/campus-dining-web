@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MealRepository {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
   final CollectionReference mealsCollection =
       FirebaseFirestore.instance.collection('items');
 
@@ -33,24 +34,24 @@ class MealRepository {
     }
   }
 
+  Future<void> addMeal(Map<String, dynamic> mealJson) async {
+    try {
+      await mealsCollection.add(mealJson);
+    } catch (e) {
+      throw Exception('Failed to add meal: $e');
+    }
+  }
+
+  Future<void> updateMeal(
+      String id, Map<String, dynamic> updatedMealJson) async {
+    try {
+      await mealsCollection.doc(id).update(updatedMealJson);
+    } catch (e) {
+      throw Exception('Failed to update meal: $e');
+    }
+  }
+
 //Other Func for future use
-  // Future<void> addMeal(Map<String, dynamic> mealJson) async {
-  //   try {
-  //     await mealsCollection.add(mealJson);
-  //   } catch (e) {
-  //     throw Exception('Failed to add meal: $e');
-  //   }
-  // }
-
-  // Future<void> updateMeal(
-  //     String id, Map<String, dynamic> updatedMealJson) async {
-  //   try {
-  //     await mealsCollection.doc(id).update(updatedMealJson);
-  //   } catch (e) {
-  //     throw Exception('Failed to update meal: $e');
-  //   }
-  // }
-
   // Future<void> deleteMeal(String id) async {
   //   try {
   //     await mealsCollection.doc(id).delete();
