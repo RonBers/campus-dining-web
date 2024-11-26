@@ -1,6 +1,7 @@
 import 'package:campus_dining_web/repositories/meal_repository.dart';
 import 'package:campus_dining_web/utils/constants/AppStyles.dart';
 import 'package:campus_dining_web/services/auth_service.dart';
+import 'package:campus_dining_web/widgets/add_meal._dialog.dart';
 import 'package:campus_dining_web/widgets/meal_card.dart';
 import 'package:flutter/material.dart';
 
@@ -32,14 +33,44 @@ class Dashboard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text('Dashboard', style: TextStyle(color: Colors.white)),
-              IconButton(
-                onPressed: () {
-                  signOut(context);
-                },
-                icon: const Icon(
-                  Icons.logout,
-                  color: Colors.white,
-                ),
+              Row(
+                children: [
+                  SizedBox(
+                    width: 100,
+                    child: OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 22),
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return const AddMealDialog();
+                            });
+                      },
+                      child: const Text(
+                        "Add Meal",
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 25,
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      signOut(context);
+                    },
+                    icon: const Icon(
+                      Icons.logout,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

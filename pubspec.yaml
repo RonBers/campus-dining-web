@@ -18,6 +18,8 @@ dependencies:
   sidebarx: ^0.17.1
   toastification: ^2.3.0
   cloud_firestore: ^5.5.0
+  firebase_storage: ^12.3.6
+  image_picker_web: ^4.0.0
 
 dev_dependencies:
   flutter_test:
