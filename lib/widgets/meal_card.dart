@@ -83,12 +83,10 @@ class MealCard extends StatelessWidget {
                 fit: screenWidth > 600 ? BoxFit.contain : BoxFit.cover,
               ),
               const SizedBox(height: 10),
-              // Bottom Section
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
                 child: Row(
                   children: [
-                    // Food Name
                     Expanded(
                       child: Text(
                         name,
@@ -100,7 +98,6 @@ class MealCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                    // Action Buttons
                     IconButton(
                       onPressed: () {
                         showDialog(

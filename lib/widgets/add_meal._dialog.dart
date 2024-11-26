@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:campus_dining_web/repositories/meal_repository.dart';
 
 class AddMealDialog extends StatefulWidget {
-  final String? mealId; // Optional, only used for editing
+  final String? mealId;
   final String? name;
   final String? description;
   final String? price;
@@ -31,14 +31,13 @@ class _AddMealDialogState extends State<AddMealDialog> {
   final nameController = TextEditingController();
   final descriptionController = TextEditingController();
   final priceController = TextEditingController();
-  bool isHidden = false; // Initialize default value for the toggle
+  bool isHidden = false;
   Uint8List? _imageBytes;
 
   @override
   void initState() {
     super.initState();
 
-    // Pre-fill the fields if editing
     if (widget.name != null) {
       nameController.text = widget.name!;
     }
@@ -49,8 +48,6 @@ class _AddMealDialogState extends State<AddMealDialog> {
       priceController.text = widget.price!;
     }
 
-    // Set the initial state of the toggle based on the passed value
-    print(widget.isHidden);
     isHidden = widget.isHidden ?? false;
   }
 
@@ -83,8 +80,7 @@ class _AddMealDialogState extends State<AddMealDialog> {
           final snapshot = await uploadTask;
           downloadUrl = await snapshot.ref.getDownloadURL();
         } else {
-          downloadUrl = widget
-              .photoUrl; // Keep the existing image if not uploading a new one
+          downloadUrl = widget.photoUrl;
         }
 
         final timestamp = FieldValue.serverTimestamp();
@@ -95,20 +91,18 @@ class _AddMealDialogState extends State<AddMealDialog> {
           'price': double.tryParse(priceController.text) ?? 0.0,
           'photoUrl': downloadUrl,
           'dateCreated': timestamp,
-          'isHidden': isHidden, // Include isHidden value
+          'isHidden': isHidden,
         };
 
         MealRepository mealRepository = MealRepository();
 
         if (widget.mealId != null) {
-          // Editing: Update the existing meal
           await mealRepository.updateMeal(widget.mealId!, mealJson);
         } else {
-          // Adding new meal
           await mealRepository.addMeal(mealJson);
         }
 
-        Navigator.of(context).pop(); // Close the dialog
+        Navigator.of(context).pop();
       } catch (e) {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text('Error: $e')));
@@ -138,6 +132,9 @@ class _AddMealDialogState extends State<AddMealDialog> {
                   hintText: "Name",
                   hintStyle: TextStyle(color: Colors.grey)),
             ),
+            const SizedBox(
+              height: 10,
+            ),
             TextField(
               controller: descriptionController,
               minLines: 4,
@@ -153,6 +150,9 @@ class _AddMealDialogState extends State<AddMealDialog> {
                   hintText: "Description",
                   hintStyle: TextStyle(color: Colors.grey)),
             ),
+            const SizedBox(
+              height: 10,
+            ),
             TextField(
               keyboardType: TextInputType.number,
               controller: priceController,
@@ -166,11 +166,31 @@ class _AddMealDialogState extends State<AddMealDialog> {
                   hintText: "Price",
                   hintStyle: TextStyle(color: Colors.grey)),
             ),
-            OutlinedButton(
-              onPressed: () {
-                _uploadImage();
-              },
-              child: const Text("Upload Image"),
+            const SizedBox(
+              height: 10,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: OutlinedButton(
+                    onPressed: _uploadImage,
+                    child: const Text("Upload Image"),
+                  ),
+                ),
+                if (_imageBytes != null)
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Image.memory(
+                        _imageBytes!,
+                        width: 100,
+                        height: 100,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+              ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
