@@ -12,6 +12,7 @@ class MealCard extends StatefulWidget {
   final String photoUrl;
   final String price;
   final bool isHidden;
+  final VoidCallback onMealUpdated;
 
   const MealCard({
     super.key,
@@ -21,6 +22,7 @@ class MealCard extends StatefulWidget {
     required this.photoUrl,
     required this.price,
     required this.isHidden,
+    required this.onMealUpdated,
   });
 
   @override
@@ -47,10 +49,6 @@ class _MealCardState extends State<MealCard> {
         SnackBar(content: Text('Error updating visibility: $e')),
       );
     }
-  }
-
-  void refreshEdit() {
-    setState(() {});
   }
 
   @override
@@ -146,7 +144,7 @@ class _MealCardState extends State<MealCard> {
                               price: widget.price,
                               photoUrl: widget.photoUrl,
                               isHidden: _isHidden,
-                              onMealSaved: refreshEdit,
+                              onMealSaved: widget.onMealUpdated,
                             );
                           },
                         );

@@ -127,13 +127,13 @@ class _DashboardState extends State<Dashboard> {
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 5),
                                 child: MealCard(
-                                  mealId: meal['id'] as String,
-                                  name: meal['name'] as String,
-                                  description: meal['description'] as String,
-                                  photoUrl: meal['photoUrl'] as String,
-                                  price: meal['price'].toString(),
-                                  isHidden: meal['isHidden'],
-                                ),
+                                    mealId: meal['id'] as String,
+                                    name: meal['name'] as String,
+                                    description: meal['description'] as String,
+                                    photoUrl: meal['photoUrl'] as String,
+                                    price: meal['price'].toString(),
+                                    isHidden: meal['isHidden'],
+                                    onMealUpdated: refreshDashBoard),
                               );
                             },
                           ),
