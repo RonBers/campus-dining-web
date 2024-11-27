@@ -49,6 +49,10 @@ class _MealCardState extends State<MealCard> {
     }
   }
 
+  void refreshEdit() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -142,6 +146,7 @@ class _MealCardState extends State<MealCard> {
                               price: widget.price,
                               photoUrl: widget.photoUrl,
                               isHidden: _isHidden,
+                              onMealSaved: refreshEdit,
                             );
                           },
                         );

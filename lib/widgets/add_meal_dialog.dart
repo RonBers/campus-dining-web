@@ -14,6 +14,7 @@ class AddMealDialog extends StatefulWidget {
   final String? price;
   final String? photoUrl;
   final bool? isHidden;
+  final VoidCallback onMealSaved;
 
   const AddMealDialog({
     super.key,
@@ -23,6 +24,7 @@ class AddMealDialog extends StatefulWidget {
     this.price,
     this.photoUrl,
     this.isHidden,
+    required this.onMealSaved,
   });
 
   @override
@@ -110,7 +112,7 @@ class _AddMealDialogState extends State<AddMealDialog> {
                 const Text('Your meal details have been updated successfully!'),
             style: ToastificationStyle.flatColored,
             autoCloseDuration: const Duration(seconds: 5));
-
+        widget.onMealSaved();
         Navigator.of(context).pop();
       } catch (e) {
         ScaffoldMessenger.of(context)
