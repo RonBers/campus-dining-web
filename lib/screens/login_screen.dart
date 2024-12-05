@@ -67,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Text(
-                            "Campus Dining App",
+                            "AdduEats",
                             style: TextStyle(
                                 fontSize: 24, fontWeight: FontWeight.bold),
                           ),

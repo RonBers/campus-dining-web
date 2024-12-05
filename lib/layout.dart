@@ -28,7 +28,7 @@ class _LayoutState extends State<Layout> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Campus Dining App",
+          "AdduEats",
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: AppColors.primaryColor,
