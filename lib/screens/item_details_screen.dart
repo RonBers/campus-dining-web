@@ -18,11 +18,11 @@ class ItemDetailsScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white12,
       appBar: AppBar(
-        backgroundColor: AppColors.primaryColor,
-        title:
-            const Text('Meal Details', style: TextStyle(color: Colors.white)),
+        title: const Text(
+          'Meal Details',
+        ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back, color: AppColors.primaryColor),
           onPressed: () {
             if (Navigator.canPop(context)) {
               context.pop();

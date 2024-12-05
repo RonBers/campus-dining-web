@@ -153,7 +153,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                   borderRadius: BorderRadius.circular(5),
                                 ),
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                AuthService().signInWithGoogle();
+                              },
                               child: const Text(
                                 "Sign in with Google",
                                 style: TextStyle(color: Colors.black),
