@@ -55,14 +55,17 @@ class _LayoutState extends State<Layout> {
           SidebarX(
             controller: _controller,
             theme: const SidebarXTheme(
-              iconTheme: const IconThemeData(color: AppColors.primaryColor),
-              selectedIconTheme: IconThemeData(color: AppColors.appGrayBG),
-              selectedItemDecoration:
-                  BoxDecoration(color: AppColors.primaryColor),
-              decoration: const BoxDecoration(
-                color: AppColors.appGrayBG,
-              ),
-            ),
+                iconTheme: IconThemeData(color: AppColors.primaryColor),
+                hoverIconTheme: IconThemeData(color: AppColors.primaryColor),
+                selectedItemDecoration: BoxDecoration(
+                    color: AppColors.primaryColor,
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(10),
+                        bottomRight: Radius.circular(10))),
+                decoration: BoxDecoration(
+                  color: AppColors.appGrayBG,
+                ),
+                selectedIconTheme: IconThemeData(color: AppColors.appGrayBG)),
             extendedTheme: const SidebarXTheme(
                 width: 200,
                 decoration: BoxDecoration(
@@ -75,8 +78,10 @@ class _LayoutState extends State<Layout> {
                 selectedTextStyle:
                     TextStyle(color: AppColors.appGrayBG, fontSize: 16),
                 selectedItemTextPadding: EdgeInsets.only(left: 20),
-                itemTextPadding: const EdgeInsets.only(left: 20),
-                hoverTextStyle: TextStyle(fontSize: 16)),
+                itemTextPadding: EdgeInsets.only(left: 20),
+                hoverTextStyle:
+                    TextStyle(fontSize: 16, color: AppColors.primaryColor),
+                hoverIconTheme: IconThemeData(color: AppColors.primaryColor)),
             items: [
               SidebarXItem(
                 icon: Icons.dashboard,
