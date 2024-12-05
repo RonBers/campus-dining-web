@@ -18,11 +18,6 @@ class _DashboardState extends State<Dashboard> {
     final mealRepository = MealRepository();
     final screenWidth = MediaQuery.of(context).size.width;
 
-    Future<void> signOut(BuildContext context) async {
-      final authService = AuthService();
-      await authService.signOut(context);
-    }
-
     Future<List<Map<String, dynamic>>> fetchMeals() async {
       try {
         return await mealRepository.fetchMealsAsJson();
@@ -37,11 +32,11 @@ class _DashboardState extends State<Dashboard> {
 
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: AppColors.primaryColor,
+          // backgroundColor: AppColors.primaryColor,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('Dashboard', style: TextStyle(color: Colors.white)),
+              const Text('Dashboard', style: TextStyle(color: Colors.black)),
               Row(
                 children: [
                   SizedBox(
@@ -49,8 +44,9 @@ class _DashboardState extends State<Dashboard> {
                     child: OutlinedButton(
                       style: OutlinedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 18),
-                        backgroundColor: AppColors.primaryColor,
-                        side: const BorderSide(color: Colors.white, width: 2),
+                        // backgroundColor: ,
+                        side: const BorderSide(
+                            color: AppColors.primaryColor, width: 2),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(100),
                         ),
@@ -65,21 +61,12 @@ class _DashboardState extends State<Dashboard> {
                       },
                       child: const Text(
                         "Add Meal",
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: AppColors.primaryColor),
                       ),
                     ),
                   ),
                   const SizedBox(
                     width: 25,
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      signOut(context);
-                    },
-                    icon: const Icon(
-                      Icons.logout,
-                      color: Colors.white,
-                    ),
                   ),
                 ],
               ),

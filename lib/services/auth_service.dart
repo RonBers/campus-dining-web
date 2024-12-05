@@ -69,7 +69,7 @@ class AuthService {
           type: ToastificationType.success,
           title: const Text("Welcome back"),
           description: Text(email),
-          style: ToastificationStyle.flatColored,
+          style: ToastificationStyle.minimal,
           autoCloseDuration: const Duration(seconds: 5),
         );
 
@@ -87,7 +87,7 @@ class AuthService {
           type: ToastificationType.error,
           title: const Text("Oops"),
           description: Text(message),
-          style: ToastificationStyle.flatColored,
+          style: ToastificationStyle.minimal,
           autoCloseDuration: const Duration(seconds: 5));
     }
   }
