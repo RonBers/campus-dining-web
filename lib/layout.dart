@@ -54,21 +54,29 @@ class _LayoutState extends State<Layout> {
         children: [
           SidebarX(
             controller: _controller,
-            theme: SidebarXTheme(
+            theme: const SidebarXTheme(
               iconTheme: const IconThemeData(color: AppColors.primaryColor),
-              selectedIconTheme:
-                  const IconThemeData(color: AppColors.primaryColor),
-              selectedItemDecoration: BoxDecoration(color: Colors.grey[300]),
+              selectedIconTheme: IconThemeData(color: AppColors.appGrayBG),
+              selectedItemDecoration:
+                  BoxDecoration(color: AppColors.primaryColor),
               decoration: const BoxDecoration(
                 color: AppColors.appGrayBG,
               ),
             ),
             extendedTheme: const SidebarXTheme(
-              width: 200,
-              decoration: BoxDecoration(
-                color: AppColors.appGrayBG,
-              ),
-            ),
+                width: 200,
+                decoration: BoxDecoration(
+                  color: AppColors.appGrayBG,
+                ),
+                textStyle: TextStyle(
+                  color: AppColors.primaryColor,
+                  fontSize: 16,
+                ),
+                selectedTextStyle:
+                    TextStyle(color: AppColors.appGrayBG, fontSize: 16),
+                selectedItemTextPadding: EdgeInsets.only(left: 20),
+                itemTextPadding: const EdgeInsets.only(left: 20),
+                hoverTextStyle: TextStyle(fontSize: 16)),
             items: [
               SidebarXItem(
                 icon: Icons.dashboard,
