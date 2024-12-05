@@ -18,14 +18,14 @@ Future<void> setMealVisibility(
         title: const Text("Information"),
         description: Text(
             '$mealName has been ${isHidden ? 'hidden' : 'made visible'} successfully.'),
-        style: ToastificationStyle.flatColored,
+        style: ToastificationStyle.minimal,
         autoCloseDuration: const Duration(seconds: 5));
   } catch (e) {
     toastification.show(
         type: ToastificationType.error,
         title: const Text("Oops"),
         description: const Text("Something went wrong!"),
-        style: ToastificationStyle.flatColored,
+        style: ToastificationStyle.minimal,
         autoCloseDuration: const Duration(seconds: 5));
   }
 }
