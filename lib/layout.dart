@@ -27,7 +27,10 @@ class _LayoutState extends State<Layout> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Campus Dining App"),
+        title: const Text(
+          "Campus Dining App",
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: AppColors.primaryColor,
         actions: [
           IconButton(
@@ -51,8 +54,12 @@ class _LayoutState extends State<Layout> {
         children: [
           SidebarX(
             controller: _controller,
-            theme: const SidebarXTheme(
-              decoration: BoxDecoration(
+            theme: SidebarXTheme(
+              iconTheme: const IconThemeData(color: AppColors.primaryColor),
+              selectedIconTheme:
+                  const IconThemeData(color: AppColors.primaryColor),
+              selectedItemDecoration: BoxDecoration(color: Colors.grey[300]),
+              decoration: const BoxDecoration(
                 color: AppColors.appGrayBG,
               ),
             ),
