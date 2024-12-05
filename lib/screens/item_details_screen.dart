@@ -45,51 +45,76 @@ class ItemDetailsScreen extends StatelessWidget {
             return const Center(child: Text('Meal not found.'));
           } else {
             final meal = snapshot.data!;
-            return Center(
-              child: Container(
-                height: 700,
-                width: 1200,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Image.network(
-                      meal['photoUrl'] ?? '',
-                      height: 350,
-                      fit: BoxFit.contain,
+            return LayoutBuilder(
+              builder: (context, constraints) {
+                return Center(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 1200),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Flexible(
+                          flex: 2,
+                          child: Image.network(
+                            meal['photoUrl'] ?? '',
+                            height: 350,
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                        // const SizedBox(width: 20),
+                        Flexible(
+                          flex: 3,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                meal['name'] ?? 'No Name',
+                                style: const TextStyle(
+                                  fontSize: 40,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                softWrap: true,
+                                overflow: TextOverflow.clip,
+                              ),
+                              const SizedBox(height: 20),
+                              OutlinedButton(
+                                style: OutlinedButton.styleFrom(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(50, 15, 50, 15),
+                                  backgroundColor: AppColors.primaryColor,
+                                  side: const BorderSide(
+                                      color: AppColors.primaryColor),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(100),
+                                  ),
+                                ),
+                                onPressed: null,
+                                child: Text(
+                                  '₱ ${(meal['price'] ?? 0).toStringAsFixed(2)}',
+                                  style: const TextStyle(
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              Text(
+                                meal['description'] ?? 'No Description',
+                                style: const TextStyle(fontSize: 20),
+                                softWrap: true,
+                                overflow: TextOverflow.clip,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(width: 50),
-                    SizedBox(
-                      width: 500,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            meal['name'] ?? 'No Name',
-                            style: const TextStyle(
-                              fontSize: 40,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-                          Text(
-                            meal['description'] ?? 'No Description',
-                            style: const TextStyle(fontSize: 20),
-                          ),
-                          const SizedBox(height: 20),
-                          Text(
-                            'Php ${(meal['price'] ?? 0).toString()}',
-                            style: const TextStyle(
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
+                  ),
+                );
+              },
             );
           }
         },
