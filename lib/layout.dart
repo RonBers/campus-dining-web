@@ -100,7 +100,7 @@ class _LayoutState extends State<Layout> {
               SidebarXItem(
                   icon: MingCute.fork_spoon_fill,
                   label: 'Add meal',
-                  onTap: () {}),
+                  onTap: () => context.go('/add_meal')),
               SidebarXItem(
                   icon: MingCute.book_2_fill,
                   label: 'Manage Meals',

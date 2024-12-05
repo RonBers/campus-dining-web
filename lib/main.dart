@@ -1,4 +1,5 @@
 import 'package:campus_dining_web/firebase_options.dart';
+import 'package:campus_dining_web/screens/add_meal_screen.dart';
 import 'package:campus_dining_web/screens/item_details_screen.dart';
 import 'package:campus_dining_web/screens/login_screen.dart';
 import 'package:campus_dining_web/screens/settings_screen.dart';
@@ -47,6 +48,10 @@ final GoRouter router = GoRouter(
         GoRoute(
           path: '/dashboard',
           builder: (context, state) => const Dashboard(),
+        ),
+        GoRoute(
+          path: '/add_meal',
+          builder: (context, state) => const AddMealScreen(),
         ),
         GoRoute(
           path: '/settings',
