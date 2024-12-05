@@ -15,6 +15,7 @@ class ItemDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white12,
       appBar: AppBar(
@@ -46,7 +47,7 @@ class ItemDetailsScreen extends StatelessWidget {
           } else {
             final meal = snapshot.data!;
             return Center(
-              child: Container(
+              child: SizedBox(
                 height: 700,
                 width: 1200,
                 child: Row(
@@ -72,17 +73,29 @@ class ItemDetailsScreen extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 20),
-                          Text(
-                            meal['description'] ?? 'No Description',
-                            style: const TextStyle(fontSize: 20),
+                          OutlinedButton(
+                            style: OutlinedButton.styleFrom(
+                              padding: EdgeInsets.fromLTRB(50, 15, 50, 15),
+                              backgroundColor: AppColors.primaryColor,
+                              side: const BorderSide(
+                                  color: AppColors.primaryColor),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(100),
+                              ),
+                            ),
+                            onPressed: () {},
+                            child: Text(
+                              '₱ ${(meal['price'] ?? 0).toStringAsFixed(2)}',
+                              style: const TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white),
+                            ),
                           ),
                           const SizedBox(height: 20),
                           Text(
-                            'Php ${(meal['price'] ?? 0).toString()}',
-                            style: const TextStyle(
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            meal['description'] ?? 'No Description',
+                            style: const TextStyle(fontSize: 20),
                           ),
                         ],
                       ),
