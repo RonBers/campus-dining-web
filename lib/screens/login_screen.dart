@@ -95,23 +95,18 @@ class _LoginScreenState extends State<LoginScreen> {
                           TextField(
                             obscureText: true,
                             controller: passwordController,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                                 filled: true,
                                 fillColor: Colors.white,
-                                focusedBorder: const OutlineInputBorder(
+                                focusedBorder: OutlineInputBorder(
                                     borderSide:
                                         BorderSide(color: Color(0xff2F348F))),
-                                enabledBorder: const OutlineInputBorder(
+                                enabledBorder: OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.grey)),
-                                prefixIcon: const Icon(Icons.key_outlined),
+                                prefixIcon: Icon(Icons.key_outlined),
                                 prefixIconColor: Colors.grey,
-                                suffixIcon: IconButton(
-                                    onPressed: () {},
-                                    icon: const Icon(
-                                        Icons.remove_red_eye_outlined)),
-                                suffixIconColor: Colors.grey,
                                 hintText: "Password",
-                                hintStyle: const TextStyle(color: Colors.grey)),
+                                hintStyle: TextStyle(color: Colors.grey)),
                           ),
                           const SizedBox(
                             height: 20,
@@ -147,7 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: OutlinedButton(
                               style: OutlinedButton.styleFrom(
                                 padding:
-                                    const EdgeInsets.symmetric(vertical: 22),
+                                    const EdgeInsets.symmetric(vertical: 12),
                                 backgroundColor: Colors.white,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(5),
@@ -156,9 +151,23 @@ class _LoginScreenState extends State<LoginScreen> {
                               onPressed: () {
                                 AuthService().signInWithGoogle();
                               },
-                              child: const Text(
-                                "Sign in with Google",
-                                style: TextStyle(color: Colors.black),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                      'assets/img/g-logo-transparent.png',
+                                      height: 35,
+                                      fit: BoxFit.contain),
+                                  const SizedBox(
+                                    width: 4,
+                                  ),
+                                  const Text(
+                                    "Sign in with Google",
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
