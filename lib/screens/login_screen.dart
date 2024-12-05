@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:campus_dining_web/services/auth_service.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -57,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Container(
                       width: 400,
                       height: 500,
-                      padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
+                      padding: const EdgeInsets.fromLTRB(40, 0, 40, 20),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         border: Border.all(color: Colors.grey),
@@ -66,11 +67,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text(
-                            "AdduEats",
-                            style: TextStyle(
-                                fontSize: 24, fontWeight: FontWeight.bold),
+                          Image.asset(
+                            'assets/img/app_logo.png',
+                            width: 100,
                           ),
+                          Text("AdduEats",
+                              style: GoogleFonts.poppins(
+                                  fontSize: 40, fontWeight: FontWeight.bold)),
                           const SizedBox(
                             height: 20,
                           ),
@@ -149,7 +152,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               ),
                               onPressed: () {
-                                AuthService().signInWithGoogle();
+                                AuthService().signInWithGoogle(context);
                               },
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,

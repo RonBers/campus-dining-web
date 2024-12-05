@@ -21,11 +21,32 @@ dependencies:
   firebase_storage: ^12.3.6
   image_picker_web: ^4.0.0
   icons_plus: ^5.0.0
+  flutter_launcher_icons: ^0.14.1
+  google_fonts: ^6.2.1
+  rename_app: ^1.6.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^4.0.0
+
+flutter_launcher_icons:
+  android: "assets/img/app_logo.png"
+  ios: true
+  image_path: "assets/img/app_logo.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  web:
+    generate: true
+    image_path: "assets/img/app_logo.png"
+    background_color: "#hexcode"
+    theme_color: "#hexcode"
+  windows:
+    generate: true
+    image_path: "assets/img/app_logo.png"
+    icon_size: 48 # min:48, max:256, default: 48
+  macos:
+    generate: true
+    image_path: "assets/img/app_logo.png"
 
 flutter:
   uses-material-design: true

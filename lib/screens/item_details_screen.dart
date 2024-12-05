@@ -2,6 +2,7 @@ import 'package:campus_dining_web/repositories/meal_repository.dart';
 import 'package:campus_dining_web/utils/constants/AppStyles.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ItemDetailsScreen extends StatelessWidget {
   final String mealId;
@@ -18,8 +19,10 @@ class ItemDetailsScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white12,
       appBar: AppBar(
-        title: const Text(
+        centerTitle: false,
+        title: Text(
           'Meal Details',
+          style: GoogleFonts.poppins(fontSize: 20),
         ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: AppColors.primaryColor),

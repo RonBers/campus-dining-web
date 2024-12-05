@@ -15,7 +15,7 @@ class AuthService {
   }
 
   // Google
-  Future<User?> signInWithGoogle() async {
+  Future<User?> signInWithGoogle(BuildContext context) async {
     try {
       final GoogleSignIn googleSignIn = GoogleSignIn(
         clientId:
@@ -34,29 +34,60 @@ class AuthService {
 
       UserCredential userCredential =
           await auth.signInWithCredential(credential);
-      print("User signed in: ${userCredential.user?.displayName}");
-      return userCredential.user;
+
+      if (context.mounted) {
+        toastification.show(
+          type: ToastificationType.success,
+          title: const Text("Welcome back"),
+          description: Text(userCredential.user?.email ?? ""),
+          style: ToastificationStyle.minimal,
+          autoCloseDuration: const Duration(seconds: 5),
+        );
+        context.go('/dashboard');
+      }
+      return null;
     } catch (e) {
-      print("Google Sign-In Error: $e");
+      toastification.show(
+        type: ToastificationType.success,
+        title: const Text("Oops! Something went wrong!"),
+        description: Text('Google Sign-In Error: $e'),
+        style: ToastificationStyle.minimal,
+        autoCloseDuration: const Duration(seconds: 5),
+      );
       return null;
     }
   }
 
 // Register Email and Password
-//   Future<User?> signUpWithEmail(String email, String password) async {
-//     try {
-//       UserCredential userCredential =
-//           await _auth.createUserWithEmailAndPassword(
-//         email: email,
-//         password: password,
-//       );
-//       print("User signed up: ${userCredential.user?.email}");
-//       return userCredential.user;
-//     } on FirebaseAuthException catch (e) {
-//       print("Email Sign-Up Error: ${e.message}");
-//       return null;
-//     }
-//   }
+  Future<User?> signUpWithEmail(
+      String email, String password, BuildContext context) async {
+    try {
+      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      if (context.mounted) {
+        toastification.show(
+          type: ToastificationType.success,
+          title: const Text("Welcome"),
+          description: Text(email),
+          style: ToastificationStyle.minimal,
+          autoCloseDuration: const Duration(seconds: 5),
+        );
+
+        context.go('/dashboard');
+      }
+    } on FirebaseAuthException catch (e) {
+      toastification.show(
+        type: ToastificationType.success,
+        title: const Text("Oops! Something went wrong!"),
+        description: Text('$e'),
+        style: ToastificationStyle.minimal,
+        autoCloseDuration: const Duration(seconds: 5),
+      );
+      return null;
+    }
+  }
 
   // Login email password
   Future<User?> loginWithEmail(

@@ -3,6 +3,7 @@ import 'package:campus_dining_web/utils/constants/AppStyles.dart';
 import 'package:campus_dining_web/widgets/add_meal_dialog.dart';
 import 'package:campus_dining_web/widgets/meal_card.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -53,8 +54,9 @@ class _DashboardState extends State<Dashboard> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('Dashboard',
-                            style: TextStyle(color: Colors.black)),
+                        Text('Dashboard',
+                            style: GoogleFonts.poppins(
+                                fontSize: 18, color: AppColors.primaryColor)),
                         SizedBox(
                           width: 110,
                           child: OutlinedButton(

@@ -1,6 +1,7 @@
 import 'package:campus_dining_web/services/auth_service.dart';
 import 'package:campus_dining_web/utils/constants/AppStyles.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:sidebarx/sidebarx.dart';
 import 'package:go_router/go_router.dart';
@@ -27,9 +28,11 @@ class _LayoutState extends State<Layout> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        titleSpacing: 50,
+        title: Text(
           "AdduEats",
-          style: TextStyle(color: Colors.white),
+          style: GoogleFonts.poppins(
+              fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold),
         ),
         backgroundColor: AppColors.primaryColor,
         actions: [
@@ -39,6 +42,9 @@ class _LayoutState extends State<Layout> {
                 EvaIcons.bell,
                 color: Colors.white,
               )),
+          const SizedBox(
+            width: 30,
+          ),
           IconButton(
             onPressed: () {
               signOut(context);
@@ -48,6 +54,9 @@ class _LayoutState extends State<Layout> {
               color: Colors.white,
             ),
           ),
+          const SizedBox(
+            width: 50,
+          )
         ],
       ),
       body: Row(
@@ -88,6 +97,18 @@ class _LayoutState extends State<Layout> {
                 label: 'Dashboard',
                 onTap: () => context.go('/dashboard'),
               ),
+              SidebarXItem(
+                  icon: MingCute.fork_spoon_fill,
+                  label: 'Add meal',
+                  onTap: () {}),
+              SidebarXItem(
+                  icon: MingCute.book_2_fill,
+                  label: 'Manage Meals',
+                  onTap: () {}),
+              SidebarXItem(
+                  icon: MingCute.comment_2_fill,
+                  label: 'Meal Insights',
+                  onTap: () {}),
               SidebarXItem(
                 icon: Icons.settings,
                 label: 'Settings',
